@@ -1,0 +1,371 @@
+/* Color Palette & Variables */
+:root {
+    --beige: #F9F7F2;
+    --sky-blue: #7FB3D5;
+    --deep-blue: #2C3E50;
+    --text-dark: #333333;
+    --white: #ffffff;
+    --glass-bg: rgba(255, 255, 255, 0.7); /* Transparent white for glass */
+    --card-shadow: rgba(127, 179, 213, 0.15);
+    --card-shadow-hover: rgba(127, 179, 213, 0.3);
+}
+
+.content-section {
+    padding: 6rem 5%; /* Increased top padding for structure */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the whole section */
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--deep-blue);
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+/* 1. The Centered, Minimal Grid */
+.centered-grid {
+    display: grid;
+    /* Forces only 2 columns, centered, with reasonable max width */
+    grid-template-columns: repeat(2, minmax(280px, 400px)); 
+    gap: 40px; 
+    justify-content: center; /* Centers columns on the page */
+    width: 100%;
+}
+
+/* 2. The Floating Postcard Aesthetic */
+.blog-postcard {
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    border-radius: 12px;
+    text-decoration: none; /* Removes link underline */
+    color: inherit;
+    overflow: hidden; /* Important for the image zoom effect */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    
+    /* The core 'floating' look */
+    box-shadow: 0 10px 25px var(--card-shadow); 
+    border-bottom: 4px solid var(--sky-blue);
+}
+
+.blog-postcard:hover {
+    transform: translateY(-10px) scale(1.02); /* Major float + slight scale */
+    box-shadow: 0 20px 40px var(--card-shadow-hover); /* Intensify shadow */
+}
+
+/* 3. The Image and Overlay */
+.card-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Crops image cleanly to fit container */
+    transition: transform 0.6s ease; /* Very smooth zoom */
+}
+
+.blog-postcard:hover .card-image {
+    transform: scale(1.1); /* Zooms image on hover */
+}
+
+/* The 'Read Analysis' overlay that fades in */
+.image-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(44, 62, 80, 0.8); /* Deep Blue mask */
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.blog-postcard:hover .image-overlay {
+    opacity: 1;
+}
+
+/* 4. The Content Inside */
+.card-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1; /* Ensures text aligns correctly on cards of uneven height */
+}
+
+.card-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    color: var(--deep-blue);
+}
+
+.card-content p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Responsive fixes: Stack cards on smaller screens */
+@media (max-width: 768px) {
+    .centered-grid {
+        grid-template-columns: 1fr; /* Stacks to 1 column */
+        gap: 30px;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--beige);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* Navbar */
+header {
+    background-color: var(--white);
+    padding: 1rem 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--deep-blue);
+    white-space: nowrap;
+}
+
+.title-tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--text-dark);
+    border-left: 2px solid #ddd;
+    padding-left: 15px;
+    opacity: 0.8;
+}
+
+/* Base Nav Links (Desktop) */
+.nav-links {
+    display: flex;
+    list-style: none;
+    transition: 0.3s ease;
+}
+
+.nav-links li {
+    margin-left: 2rem;
+    white-space: nowrap;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-item {
+    padding: 10px 15px;
+    position: relative;
+}
+
+/* Dynamic Underline Hover Effect */
+.nav-item::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--sky-blue); /* Fixed variable name */
+    transition: width 0.3s ease;
+}
+
+.nav-item:hover::after, .nav-item.active::after {
+    width: 100%;
+}
+
+/* Hamburger Toggle */
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    z-index: 1001; /* Stay above the glass menu */
+    position: relative;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: var(--deep-blue);
+    transition: 0.3s ease;
+}
+
+/* --- THE GLASSMORPHISM DRAWER (Mobile) --- */
+@media (max-width: 950px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: flex; 
+        position: fixed;
+        top: 0;
+        right: -100%; 
+        height: 100vh;
+        width: 70%; 
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        
+        /* Glassmorphism Core */
+        background-color: var(--glass-bg); 
+        backdrop-filter: blur(15px); 
+        -webkit-backdrop-filter: blur(15px);
+        border-left: 1px solid rgba(255, 255, 255, 0.3);
+        
+        transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-links li {
+        margin: 1.5rem 0;
+        opacity: 0;
+        transform: translateX(20px);
+        transition: 0.4s ease;
+    }
+
+    .nav-links.active li {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.2s;
+    }
+
+    /* Stack tagline on small screens */
+    .header-content {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .title-tagline {
+        border-left: none;
+        padding-left: 0;
+        font-size: 0.9rem;
+    }
+}
+
+/* Hamburger to X Animation */
+.menu-toggle.is-active .bar:nth-child(2) { opacity: 0; }
+.menu-toggle.is-active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.menu-toggle.is-active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image: linear-gradient(rgba(249, 247, 242, 0.3), rgba(249, 247, 242, 0.3)), url('https://images.pexels.com/photos/8099514/pexels-photo-8099514.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--deep-blue);
+}
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px; /* Increased gap for a cleaner look */
+    margin-top: 30px;
+    width: 100%;
+}
+
+.blog-card {
+    background: var(--white);
+    padding: 25px; /* Internal breathing room */
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column; /* Stacks image, title, text vertically */
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Soft professional shadow */
+    border-bottom: 4px solid var(--sky-blue);
+    transition: transform 0.3s ease;
+}
+
+.blog-card h3 {
+    font-family: 'Playfair Display', serif;
+    margin: 15px 0 10px 0;
+    color: var(--deep-blue);
+}
+
+.blog-card p {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.read-more {
+    text-decoration: none;
+    color: var(--sky-blue);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+.read-more:hover {
+    color: var(--deep-blue);
+}
+
+/* Footer & Extras */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--deep-blue);
+    color: var(--white);
+    font-size: 0.9rem;
+}
